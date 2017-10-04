@@ -53,7 +53,7 @@ body {
      .column.fourth { width: 25%; }
 
      .column.flow-opposite { float: right; }
-    
+
 }
 
 /* Large screens (1024px) */
@@ -61,4 +61,12 @@ body {
     html {
         font-size: 120%;
     }
+}
+
+.clearfix::after {
+    content: ".";
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
 }
