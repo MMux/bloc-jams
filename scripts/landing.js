@@ -17,12 +17,14 @@ window.onload = function() {
 
 var pointsArray = document.getElementsByClassName('point');
 
-var animatePoints = function(points) {
-    var effectTransform = "scaleX(1) translateY(0)";
-    for (var i = 0; i < points.length; i++) {
-        pointsArray[i].style.opacity = 1;
-        pointsArray[i].style.transform = effectTransform;
-        pointsArray[i].style.msTransform = effectTransform;
-        pointsArray[i].style.WebkitTransform = effectTransform;
-    }
+var animatePoints = function(target) {
+    forEach(target, transform);
+};
+
+var transform = function(element) {
+        var effectTransform = "scaleX(1) translateY(0)";
+        element.style.opacity = 1;
+        element.style.transform = effectTransform;
+        element.style.msTransform = effectTransform;
+        element.style.WebkitTransform = effectTransform;
 };
