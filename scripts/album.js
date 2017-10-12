@@ -29,6 +29,22 @@ var albumMarconi = {
     ]
 };
 
+// Assignment Example Album
+var albumMovingPictures = {
+    title: 'Moving Pictures',
+    artist: 'Rush',
+    label: 'The Island',
+    year: '1981',
+    albumArtUrl: 'assets/images/album_covers/15.png',
+    songs: [
+        { title: 'Tom Sawyer', duration: '4:37' },
+        { title: 'Red Barchetta', duration: '6:10' },
+        { title: 'YYZ', duration: '4:26'},
+        { title: 'Limelight', duration: '3:14' },
+        { title: 'The Camera  Eye', duration: '2:15'}
+    ]
+};
+
 var setCurrentAlbum = function(album) {
     var albumTitle = document.getElementsByClassName('album-view-title')[0];
     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
@@ -46,19 +62,53 @@ var setCurrentAlbum = function(album) {
     for(var i  = 0; i < album.songs.length; i++) {
         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
     }
-};
 
-window.onload = function() {
-    setCurrentAlbum(albumPicasso);
-}
+    // captures the current hard coded albums in an array
+    var albumsCollection = [albumPicasso, albumMarconi, albumMovingPictures];
+
+    // generate a random number based on the array length
+    var randomAlbum = [Math.floor(Math.random() * albumsCollection.length)];
+
+    this.addEventListener('click', function(e) {
+        // return a random number in the range of the array of album objects
+        setCurrentAlbum(albumsCollection[randomAlbum]);
+    });
+
+};
 
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
     '<tr class="album-view-song-item">'
-    +    '<td class="song-item-number">' + songNumber + '</td>'
+    +    '<td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
     +    '<td class="song-item-title">' + songName + '</td>'
     +    '<td class="song-item-duration">' + songLength + '</td>'
     + '</tr>'
     ;
     return template;
 };
+
+var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+var songRows = document.getElementsByClassName('album-view-song-item');
+
+// Album button templates
+var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+
+
+window.onload = function() {
+    setCurrentAlbum(albumPicasso);
+
+    songListContainer.addEventListener('mouseover', function(e) {
+        console.log(e.target);
+        if (event.target.parentElement.className === 'album-view-song-item') {
+
+            event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
+        }
+
+        for (var i = 0; i < songRows.length; i++) {
+            songRows[i].addEventListener('mouseleave', function(e) {
+                this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+            });
+
+        }
+    });
+}
