@@ -67,14 +67,63 @@ var setCurrentAlbum = function(album) {
     var albumsCollection = [albumPicasso, albumMarconi, albumMovingPictures];
 
     // generate a random number based on the array length
-    var randomAlbum = [Math.floor(Math.random() * albumsCollection.length)];
-
-    this.addEventListener('click', function(e) {
-        // return a random number in the range of the array of album objects
-        setCurrentAlbum(albumsCollection[randomAlbum]);
-    });
+    // MM: disable this for implementing play/pause button functionality
+    // var randomAlbum = [Math.floor(Math.random() * albumsCollection.length)];
+    //
+    // this.addEventListener('click', function(e) {
+    //     // return a random number in the range of the array of album objects
+    //     setCurrentAlbum(albumsCollection[randomAlbum]);
+    // });
 
 };
+
+// get a parent function
+var findParentByClassName = function(element, targetClassName) {
+
+    var currentElement = element.parentElement;
+    while(currentElement.className !== targetClassName && currentElement.className !== null ) {
+        currentElement = currentElement.parentElement;
+    }
+    return currentElement;
+};
+
+
+
+
+
+var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+var songRows = document.getElementsByClassName('album-view-song-item');
+// for pause button
+var pauseButtonTemplate= '<a class="album-song-button"><span class="ion-pause"></span></a>';
+
+
+// event listener for clicking a row for playing a song
+songListContainer.addEventListener('click', function(e) {
+    if (findParentByClassName(e.target,  'album-view-song-item').className === 'album-view-song-item') {
+
+        //  change the song number cells innerHTML to the pause button
+        // how do i go up the DOM to the song item number and replace?
+        e.target.innerHTML = pauseButtonTemplate;
+        console.log('hit');
+
+        // check to see if other elements already have the pause button applied
+        if (e.target.parentNode.childNodes) {
+            // if the pause button is on another song, remove that innerHTML and replace with the song number
+            e.target.parentNode.childNodes.innerHTML = 'yo';
+        }
+
+        // if (e.target.parentElement.querySelector('.song-item-number').innerHTML  === pauseButtonTemplate ) {
+        //     console.log('other song');
+        // }
+    }
+
+
+    // on mouseleave, run the findParentByClassName function, passing the event target as an argument
+    // if the function returns the parent element,
+
+
+})
+
 
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
@@ -87,8 +136,6 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
-var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
-var songRows = document.getElementsByClassName('album-view-song-item');
 
 // Album button templates
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
@@ -98,15 +145,26 @@ window.onload = function() {
     setCurrentAlbum(albumPicasso);
 
     songListContainer.addEventListener('mouseover', function(e) {
-        console.log(e.target);
+        // console.log(e.target);
         if (event.target.parentElement.className === 'album-view-song-item') {
 
             event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
         }
 
+        var songClicked = document.getElementsByClassName('song-item-number');
+
         for (var i = 0; i < songRows.length; i++) {
             songRows[i].addEventListener('mouseleave', function(e) {
+                // console.log(this.children[0].getAttribute('data-song-number'))
                 this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+                // console.log(e.target)
+                // var albumViewSongItem = findParentByClassName(e.target, "album-view-song-item");
+                // determine on mouseleave if the song is playing
+                // if (event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate) {
+                //     event.target.parentElement.querySelector('.song-item-number').innerHTML = pauseButtonTemplate;
+                // }
+                // grasp the innerHTML of the song that is clicked on
+
             });
 
         }
