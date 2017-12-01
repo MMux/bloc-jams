@@ -56,7 +56,6 @@ var setCurrentAlbum = function(album) {
     albumArtist.firstChild.nodeValue = album.artist;
     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
     albumImage.setAttribute('src', album.albumArtUrl);
-
     albumSongList.innerHTML = '';
 
     for(var i  = 0; i < album.songs.length; i++) {
@@ -65,15 +64,6 @@ var setCurrentAlbum = function(album) {
 
     // captures the current hard coded albums in an array
     var albumsCollection = [albumPicasso, albumMarconi, albumMovingPictures];
-
-    // generate a random number based on the array length
-    var randomAlbum = [Math.floor(Math.random() * albumsCollection.length)];
-
-    this.addEventListener('click', function(e) {
-        // return a random number in the range of the array of album objects
-        setCurrentAlbum(albumsCollection[randomAlbum]);
-    });
-
 };
 
 var createSongRow = function(songNumber, songName, songLength) {
@@ -90,25 +80,23 @@ var createSongRow = function(songNumber, songName, songLength) {
 var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
 var songRows = document.getElementsByClassName('album-view-song-item');
 
-// Album button templates
+// album button template
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
-
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 
-    songListContainer.addEventListener('mouseover', function(e) {
-        console.log(e.target);
+    songListContainer.addEventListener('mouseover', function(event) {
         if (event.target.parentElement.className === 'album-view-song-item') {
-
+            // change song item number to play playButtonTemplate
             event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
         }
-
-        for (var i = 0; i < songRows.length; i++) {
-            songRows[i].addEventListener('mouseleave', function(e) {
-                this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
-            });
-
-        }
     });
+
+    for (let i = 0; i < songRows.length; i++) {
+        songRows[i].addEventListener('mouseleave', function(event) {
+            // revert to songNumber
+            this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+        });
+    }
 }
