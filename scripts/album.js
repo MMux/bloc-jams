@@ -77,29 +77,28 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
+
+
+var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
+var songRows = document.getElementsByClassName('album-view-song-item');
+
+// album button template
+var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 
-    var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
-    var songRows = document.getElementsByClassName('album-view-song-item');
-
-    // album button template
-    var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
-
-    window.onload = function() {
-        setCurrentAlbum(albumPicasso);
-
-        songListContainer.addEventListener('mouseover', function(event) {
-            if (event.target.parentElement.className === 'album-view-song-item') {
-                // change song item number to play playButtonTemplate
-                event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
-            }
-        });
-
-        for (let i = 0; i < songRows.length; i++) {
-            songRows[i].addEventListener('mouseleave', function(event) {
-                // revert to songNumber
-                this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
-            });
+    songListContainer.addEventListener('mouseover', function(event) {
+        if (event.target.parentElement.className === 'album-view-song-item') {
+            // change song item number to play playButtonTemplate
+            event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
         }
-    };
+    });
+
+    for (let i = 0; i < songRows.length; i++) {
+        songRows[i].addEventListener('mouseleave', function(event) {
+            // revert to songNumber
+            this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+        });
+    }
+};
