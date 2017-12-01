@@ -56,7 +56,6 @@ var setCurrentAlbum = function(album) {
     albumArtist.firstChild.nodeValue = album.artist;
     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
     albumImage.setAttribute('src', album.albumArtUrl);
-
     albumSongList.innerHTML = '';
 
     for(var i  = 0; i < album.songs.length; i++) {
@@ -65,15 +64,6 @@ var setCurrentAlbum = function(album) {
 
     // captures the current hard coded albums in an array
     var albumsCollection = [albumPicasso, albumMarconi, albumMovingPictures];
-
-    // generate a random number based on the array length
-    var randomAlbum = [Math.floor(Math.random() * albumsCollection.length)];
-
-    this.addEventListener('click', function(e) {
-        // return a random number in the range of the array of album objects
-        setCurrentAlbum(albumsCollection[randomAlbum]);
-    });
-
 };
 
 var createSongRow = function(songNumber, songName, songLength) {
