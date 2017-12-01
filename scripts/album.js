@@ -66,6 +66,19 @@ var setCurrentAlbum = function(album) {
     var albumsCollection = [albumPicasso, albumMarconi, albumMovingPictures];
 };
 
+var findParentByClassName = function(e) {
+        while(e.target.parentElement.className !== 'album-view-song-item' ) {
+            console.log('yo');
+        }
+};
+
+var getSongItem = function(element) {
+    switch (element.className) {
+
+    }
+};
+
+
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
     '<tr class="album-view-song-item">'
@@ -84,6 +97,7 @@ var songRows = document.getElementsByClassName('album-view-song-item');
 
 // album button template
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>'
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
