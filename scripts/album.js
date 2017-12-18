@@ -164,7 +164,7 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
 
 // store state of currently playing song
 var currentAlbum = null;
-var currentlyPlayingSongNumber = 1;
+var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 
 var $previousButton = $('.main-controls .previous');
