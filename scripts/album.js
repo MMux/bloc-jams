@@ -14,7 +14,7 @@ var setSong = function(songNumber) {
 
 var seek = function(time) {
     if (currentSoundFile) {
-        currentSoundFile.setTime();
+        currentSoundFile.setTime(time);
     }
 }
 
