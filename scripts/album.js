@@ -78,7 +78,6 @@ var setupSeekBars = function() {
     var $seekBars = $('.player-bar .seek-bar');
 
     $seekBars.click(function(event) {
-        console.log('cliked');
         var offsetX = event.pageX - $(this).offset().left;
         var barWidth = $(this).width();
 
